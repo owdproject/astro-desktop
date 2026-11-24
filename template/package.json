@@ -1,0 +1,15 @@
+{
+  "name": "owd-astro-desktop",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@owdproject/astro": "./vendor/astro",
+    "@owdproject/core": "4.0.0-alpha.4",
+    "astro": "^5.18.0"
+  }
+}

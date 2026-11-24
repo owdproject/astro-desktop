@@ -1,0 +1,77 @@
+---
+import '../desktop.css'
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Astro Desktop · Open Web Desktop</title>
+  </head>
+  <body>
+    <header>
+      <a href="https://owdproject.org">Open Web Desktop</a>
+      <button id="launch" type="button">Open About</button>
+    </header>
+    <main aria-labelledby="workspace-title">
+      <p>Astro experiment · Open Web Desktop</p>
+      <h1 id="workspace-title">Astro Desktop</h1>
+      <p>A desktop window on a static Astro page.</p>
+      <div id="windows"></div>
+    </main>
+
+    <template id="about">
+      <owd-desktop-window class="desktop-window" window-id="about" title="About" role="region" aria-label="About Astro Desktop" hidden>
+        <div class="titlebar">
+          <span data-owd-drag-handle>About</span>
+          <button type="button" aria-label="Close About">×</button>
+        </div>
+        <div class="window-content">
+          <h2>A desktop in Astro</h2>
+          <p>This window is a custom element backed by the shared OWD runtime. Its content is rendered by Astro.</p>
+        </div>
+      </owd-desktop-window>
+    </template>
+
+    <script>
+      import { defineOwdWindowElement, getSharedDesktop } from '@owdproject/astro'
+
+      const top = 64
+      const workarea = () => ({ x: 0, y: top, width: innerWidth, height: Math.max(0, innerHeight - top) })
+      const desktop = getSharedDesktop({ workarea: workarea() })
+      defineOwdWindowElement('owd-desktop-window', desktop)
+      window.addEventListener('resize', () => desktop.workspaces.setWorkarea(workarea()))
+
+      const launcher = document.querySelector<HTMLButtonElement>('#launch')!
+      const template = document.querySelector<HTMLTemplateElement>('#about')!
+      const windows = document.querySelector('#windows')!
+      launcher.addEventListener('click', () => {
+        const existing = windows.firstElementChild
+        if (existing) {
+          desktop.windows.focusWindow('about')
+          existing.querySelector('button')?.focus()
+          return
+        }
+
+        const panel = template.content.firstElementChild!.cloneNode(true) as HTMLElement
+        const width = Math.min(420, innerWidth - 32)
+        panel.setAttribute('width', String(width))
+        panel.setAttribute('height', '235')
+        const introBottom = document.querySelector('#workspace-title + p')!.getBoundingClientRect().bottom
+        const y = Math.max(top + 24, Math.min(introBottom + 24, innerHeight - 251))
+        panel.setAttribute('x', String(Math.round((innerWidth - width) / 2)))
+        panel.setAttribute('y', String(Math.round(y)))
+        const close = panel.querySelector('button')!
+        close.addEventListener('click', () => {
+          desktop.windows.closeWindow('about')
+          panel.remove()
+          launcher.focus()
+        })
+        windows.append(panel)
+        panel.hidden = false
+        close.focus()
+      })
+    </script>
+  </body>
+</html>

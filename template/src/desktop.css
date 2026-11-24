@@ -1,0 +1,79 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #faf3ff;
+  background: #171025;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+header {
+  height: 64px;
+  padding-inline: clamp(1rem, 5vw, 3rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  border-bottom: 1px solid #493654;
+}
+header a { color: inherit; font-weight: 650; text-decoration: none; }
+button {
+  border: 1px solid #f4b5ff;
+  border-radius: .35rem;
+  background: #f4b5ff;
+  color: inherit;
+  padding: .5rem .75rem;
+  font: inherit;
+  cursor: pointer;
+}
+button:hover { background: #fad5ff; }
+:focus-visible { outline: 2px solid #f9c4ff; outline-offset: 3px; }
+main { padding: clamp(3rem, 9vw, 8rem) clamp(1rem, 7vw, 6rem); }
+main > p { color: #d0bfd9; }
+main > p:first-child { font-family: monospace; }
+h1 {
+  margin: .5rem 0;
+  font-size: clamp(2.75rem, 9vw, 7rem);
+  letter-spacing: -.07em;
+  line-height: 1;
+}
+.desktop-window {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  overflow: hidden;
+  border: 1px solid #715583;
+  border-radius: .65rem;
+  background: #21172e;
+  box-shadow: 0 1.25rem 3rem #0c0617a0;
+}
+.titlebar {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #493654;
+  background: #362345;
+}
+.titlebar span {
+  flex: 1;
+  padding: .6rem .9rem;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.titlebar button { padding: .15rem .55rem; margin-right: .4rem; }
+.window-content { padding: 1rem; overflow: auto; }
+.window-content h2 { margin: 0; font-size: 1.25rem; }
+.window-content p { line-height: 1.5; }
+
+body {
+  min-height: 100dvh;
+  background: radial-gradient(ellipse at 68% 34%, #622349 0, transparent 58%),
+    radial-gradient(ellipse at 28% 16%, #342661 0, transparent 55%), #171025;
+}
+header { background: #171025a8; }
+header button { color: #241331; font-weight: 700; border-radius: 2rem; }
+main { max-width: 68rem; margin-inline: auto; text-align: center; }
+main > p:first-child { color: #fbc0d8; }
+h1 { font-weight: 780; letter-spacing: -.075em; }
+.titlebar button { color: #281835; }
+.desktop-window { text-align: start; }
